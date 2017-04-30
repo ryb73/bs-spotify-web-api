@@ -4,7 +4,10 @@
   "description": "Bucklescript bindings for spotify-web-api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "eval $(dependencyEnv) && nopam && bsb 2>&1 | berror.native --path-to-refmttype $(which refmttype)",
+    "watch": "eval $(dependencyEnv) && nopam && bsb -make-world -w 2>&1 | berror.native --path-to-refmttype $(which refmttype)",
+    "clean": "bsb -clean-world"
   },
   "keywords": [],
   "license": "MIT",
