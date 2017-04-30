@@ -1,6 +1,6 @@
 {
   "name": "bs-spotify-web-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bucklescript bindings for spotify-web-api",
   "main": "index.js",
   "scripts": {
