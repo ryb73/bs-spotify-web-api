@@ -1,0 +1,11 @@
+{
+    "name" : "bs-spotify-web-api",
+    "sources" : [
+        { "dir" : "src" },
+        {
+            "dir": "test",
+            "type": "dev"
+        }
+    ],
+    "bsc-flags": [ "-w -10" ]
+}

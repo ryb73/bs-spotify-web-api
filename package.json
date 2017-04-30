@@ -1,0 +1,23 @@
+{
+  "name": "bs-spotify-web-api",
+  "version": "1.0.0",
+  "description": "Bucklescript bindings for spotify-web-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "author": "Ryan Biwer",
+  "_": [],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ryb73/bs-spotify-web-api.git"
+  },
+  "devDependencies": {
+    "bs-platform": "1.7.3",
+    "dependency-env": "0.1.1",
+    "nopam": "0.1.0",
+    "ocamlBetterErrors": "0.1.1"
+  }
+}
