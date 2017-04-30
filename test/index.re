@@ -12,5 +12,9 @@ pauth
         Js.log data##expires_in;
         Js.log data##access_token;
         Js.log data##refresh_token;
+
+        spotify##setAccessToken data##access_token;
+        spotify##setRefreshToken data##refresh_token;
+
         Js.Promise.resolve ();
     });

@@ -7,6 +7,8 @@ class type data = {
 class type t = {
     pub createAuthorizeURL : array string => string => string;
     pub authorizationCodeGrant : string => Js.Promise.t (Js.t data);
+    pub setAccessToken : string => unit;
+    pub setRefreshToken : string => unit;
 } [@bs];
 
 type options = [%bs.obj: {.
