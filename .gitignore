@@ -64,3 +64,5 @@ node_modules
 lib/
 
 .merlin
+
+package-links.json
