@@ -1,7 +1,7 @@
 let maxPageSizePlaylists = 50;
 let maxPageSizeTracks = 100;
 
-class type codeGrant = {
+/* class type codeGrant = {
     pub expires_in : string;
     pub access_token : string;
     pub refresh_token : string;
@@ -14,16 +14,6 @@ class type user = {
     pub uri : string;
 };
 
-class type playlist = {
-    pub collaborative : Js.boolean;
-    pub href : string;
-    pub id : string;
-    pub name : string;
-    pub public : Js.boolean;
-    pub snapshot_id	: string;
-    pub uri : string;
-    pub owner : Js.t user;
-};
 
 class type simplifiedArtists = {
     pub id : string;
@@ -92,6 +82,7 @@ type options = [%bs.obj: {.
     clientId : string,
     clientSecret : Js.undefined string,
     redirectUri : string
-}];
+}]; */
 
-external create : options => Js.t t = "spotify-web-api-node" [@@bs.new] [@@bs.module];
+exception NoBody(Superagent.result);
+exception UnrecognizedResponseFormat(Decco.decodeError);

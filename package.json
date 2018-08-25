@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "num run clean && bsb -clean-world",
     "watch": "npm run clean && bsb -make-world -w",
+    "watch-test": "webpack -w",
     "clean": "rm -rf lib/ && bsb -clean-world"
   },
   "keywords": [],
@@ -18,6 +19,10 @@
     "url": "git@github.com:ryb73/bs-spotify-web-api.git"
   },
   "peerDependencies": {
-    "bs-platform": "^2.0.0"
+    "bs-platform": "^3.1.5"
+  },
+  "devDependencies": {
+    "webpack": "4.16.5",
+    "webpack-cli": "3.1.0"
   }
 }
