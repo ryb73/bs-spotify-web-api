@@ -1,3 +1,5 @@
+let tracksMax = 100;
+
 let getTracks = (~fields=?, ~limit=?, ~offset=?, ~market=?, accessToken, playlistId) =>
     "/playlists/" ++ ReDom.encodeUriComponent(playlistId) ++ "/tracks"
     |> Api.buildReq(accessToken)

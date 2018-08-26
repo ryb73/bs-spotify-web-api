@@ -1,6 +1,6 @@
 open Js.Promise;
 open Belt.Result;
-open Spotify;
+open Types;
 
 [@decco]
 type page('a) = {
