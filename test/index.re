@@ -1,24 +1,6 @@
-open Belt.Result;
-open Js.Promise;
-open ReDomSuite;
+ReactDOMRe.renderToElementWithId(<Root />, "container");
 
-[@decco] type config = { clientId: string };
-[@bs.module] external config : Js.Json.t = "../../../config.json";
-let clientId = switch (config_decode(config)) {
-    | Ok({ clientId }) => clientId
-    | _ => failwith("Invalid config")
-};
-
-let token = switch (OAuth.getAccessTokenFromHash()) {
-    | Some(token) => token
-    | None => {
-        Auth.createAuthorizeUrl(clientId, "http://localhost:54380/", [| Auth.UserModifyPlaybackState, Auth.Streaming |])
-            |> Location.setHref(ReDom.location);
-        failwith("Redirecting");
-    }
-};
-
-Users.me(token)
+/* Users.me(token)
     |> then_(({ Types.User.display_name, id }) => {
         switch display_name {
             | Some(name) => Js.log2("hey it's", name)
@@ -52,4 +34,4 @@ Users.me(token)
     });
 
 Playback.init()
-    |> PromiseEx.map(() => Js.log("started"));
+    |> PromiseEx.map(() => Js.log("started")); */

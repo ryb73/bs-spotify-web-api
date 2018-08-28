@@ -1,14 +1,48 @@
 <!doctype html>
 <html>
-    <head><title>spot playback test</title></head>
+    <head>
+        <title>spot playback test</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gridlex/2.7.1/gridlex.min.css">
+        <style>
+            body {
+                background-color: #2ab756;
+                color: #555;
+            }
+
+            .card {
+                margin: 15px;
+                border: 1px solid #555;
+                background-color: #FFE;
+            }
+
+            h2 {
+                font-size: 1.5em;
+                text-align: center;
+            }
+
+            input[type="radio"], label {
+                margin-right: 5px;
+            }
+
+            button {
+                font-size: 1.25em;
+            }
+
+            div {
+                margin: 10px 0;
+            }
+        </style>
+    </head>
     <body>
-        <h1 id="status">loading...</h1>
+        <div id="container"></div>
+
+        <!-- <h1 id="status">loading...</h1>
         <div id="controls" style="display: none; font-size: 1.5em">
             <form id="play-song">
                 <button>Play</button><input type="text" placeholder="song ID" value="spotify:track:6CdDTczPGeI9sdznpTmYEZ" />
             </form>
-        </div>
-        <script src="https://sdk.scdn.co/spotify-player.js"></script>
+        </div> -->
+        <!-- <script src="https://sdk.scdn.co/spotify-player.js"></script> -->
         <script src="js/index.js"></script>
     </body>
 </html>

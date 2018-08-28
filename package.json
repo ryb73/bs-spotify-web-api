@@ -8,7 +8,7 @@
     "build": "num run clean && bsb -clean-world",
     "watch": "npm run clean && bsb -make-world -w",
     "watch-test": "webpack -w",
-    "clean": "rm -rf lib/ && bsb -clean-world"
+    "clean": "rm -rf lib/ && rm -rf test/js/ && bsb -clean-world"
   },
   "keywords": [],
   "license": "MIT",
@@ -22,6 +22,7 @@
     "bs-platform": "^3.1.5"
   },
   "devDependencies": {
+    "reason-react": "0.5.3",
     "webpack": "4.16.5",
     "webpack-cli": "3.1.0"
   }
