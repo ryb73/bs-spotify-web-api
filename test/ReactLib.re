@@ -5,3 +5,5 @@ let getOption = fun
     | None => failwith("Expected Some, got None");
 
 let noopSubmit = (e) => ReactEvent.Form.preventDefault(e);
+
+let width = (w) => ReactDOMRe.Style.make(~width=w, ());

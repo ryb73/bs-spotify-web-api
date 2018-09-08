@@ -5,5 +5,6 @@ let make = (~token, _) => {
     render: (_) =>
         <div className="grid-6">
             <User token />
+            <Playlist token />
         </div>
 };
