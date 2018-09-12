@@ -37,7 +37,8 @@ let make = (~token, _) => {
                 <h2>(s2e("Playlist"))</h2>
 
                 <div>
-                    <input type_="text" value=id onChange=(handle(idChanged)) />
+                    <input type_="text" value=id placeholder="playlist id"
+                        onChange=(handle(idChanged)) />
                 </div>
 
                 <div>

@@ -1,10 +1,12 @@
+open Api;
+
 let tracksMax = 100;
 
 let getTracks = (~fields=?, ~limit=?, ~offset=?, ~market=?, accessToken, playlistId) =>
     "/playlists/" ++ ReDom.encodeUriComponent(playlistId) ++ "/tracks"
-    |> Api.buildReq(accessToken)
-    |> Api.setOptionalParam("fields", fields)
-    |> Api.setOptionalParam("limit", limit |> Belt.Option.map(_, string_of_int))
-    |> Api.setOptionalParam("offset", offset |> Belt.Option.map(_, string_of_int))
-    |> Api.setOptionalParam("market", market)
-    |> Api.sendReq(Api.page_decode(Types.PlaylistTrack.t_decode));
+    |> buildGet(accessToken)
+    |> setOptionalQueryParam("fields", fields)
+    |> setOptionalQueryParam("limit", limit |> Belt.Option.map(_, string_of_int))
+    |> setOptionalQueryParam("offset", offset |> Belt.Option.map(_, string_of_int))
+    |> setOptionalQueryParam("market", market)
+    |> sendReq(page_decode(Types.PlaylistTrack.t_decode));

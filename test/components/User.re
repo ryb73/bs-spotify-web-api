@@ -33,7 +33,9 @@ let otherClicked = (_, { send }) => send(SetUserId(""));
 let renderIdField = ({ state, handle }) =>
     switch state.user {
         | Me => null
-        | UserId(id) => <input type_="text" value=id onChange=(handle(idChanged)) />
+        | UserId(id) =>
+            <input type_="text" value=id placeholder="user id"
+                onChange=(handle(idChanged)) />
     };
 
 let component = reducerComponent("User");

@@ -6,5 +6,6 @@ let make = (~token, _) => {
         <div className="grid-6">
             <User token />
             <Playlist token />
+            <PlaybackTest token />
         </div>
 };

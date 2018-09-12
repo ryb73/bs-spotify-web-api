@@ -13,8 +13,13 @@ type page('a) = {
     total: int,
 };
 
-let buildReq = (accessToken, path) => Superagent.(
+let buildGet = (accessToken, path) => Superagent.(
     get("https://api.spotify.com/v1" ++ path)
+        |> setHeader(Authorization(Bearer, accessToken))
+);
+
+let buildPut = (accessToken, path) => Superagent.(
+    put("https://api.spotify.com/v1" ++ path)
         |> setHeader(Authorization(Bearer, accessToken))
 );
 
@@ -38,11 +43,17 @@ let sendReq = (decoder, request) => Superagent.(
 );
 
 let req = (accessToken, path, decoder) =>
-    buildReq(accessToken, path)
+    buildGet(accessToken, path)
         |> sendReq(decoder);
+
+let setOptionalQueryParam = (key, value, req) =>
+    switch value {
+        | Some(value) => Superagent.query(key, value, req)
+        | None => req
+    };
 
 let setOptionalParam = (key, value, req) =>
     switch value {
-        | Some(value) => Superagent.query(key, value, req)
+        | Some(value) => Superagent.send(key, value, req)
         | None => req
     };
