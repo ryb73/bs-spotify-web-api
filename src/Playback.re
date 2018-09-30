@@ -12,12 +12,14 @@ type player;
 
 [@decco] type webPlaybackPlayer = { device_id: string };
 
-[@decco] type context = {
+[@decco]
+type context = {
     uri: option(string),
     metadata: option(Js.Json.t),
 };
 
-[@decco] type disallows = {
+[@decco]
+type disallows = {
     [@decco.default false] pausing: bool,
     [@decco.default false] peeking_next: bool,
     [@decco.default false] peeking_prev: bool,
@@ -27,7 +29,8 @@ type player;
     [@decco.default false] skipping_prev: bool,
 };
 
-[@decco] type trackWindow = {
+[@decco]
+type trackWindow = {
     current_track: Js.Json.t,
     previous_tracks: array(Js.Json.t),
     next_tracks: array(Js.Json.t)
