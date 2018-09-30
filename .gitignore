@@ -64,5 +64,11 @@ node_modules
 lib/
 
 .merlin
+.bsb.lock
 
+# persistent-package-linker
 package-links.json
+
+# for testing
+config.json
+test/js
