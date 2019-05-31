@@ -39,6 +39,7 @@ let scopesToStr = (scopes) =>
     |> Js.Array.map(_singleScopeToStr)
     |> Js.Array.joinWith(",");
 
+// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scopes) => url
 let createAuthorizeUrl = (~state=?, ~forceShowDialog=?, clientId, redirectUri, scopes) => {
     let queryParams = Js.Dict.fromList([
         ("client_id", Js.Json.string(clientId)),
