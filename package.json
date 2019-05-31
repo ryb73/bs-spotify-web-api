@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Warning: no test specified\"",
-    "build": "num run clean && bsb -clean-world",
+    "build": "npm run clean && bsb -clean-world",
     "watch": "npm run clean && bsb -make-world -w",
     "webpack-test": "webpack -w",
     "clean": "rm -rf lib/ && rm -rf test/js/ && bsb -clean-world",
