@@ -1,6 +1,7 @@
 open ReactLib;
 open PromEx;
 open ReasonReact;
+open Spotify;
 
 type user =
   | Me

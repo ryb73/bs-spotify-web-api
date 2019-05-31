@@ -1,6 +1,7 @@
 open Belt.Result;
 open ReactLib;
 open ReasonReact;
+open Spotify;
 
 type playerState = {
     player: Playback.player,

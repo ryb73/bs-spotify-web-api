@@ -1,10 +1,10 @@
 {
-  "name": "bs-spotify-web-api",
+  "name": "@ryb73/bs-spotify-web-api",
   "version": "2.0.0",
   "description": "Bucklescript bindings for spotify-web-api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "warning \"Error: no test specified\"",
     "build": "num run clean && bsb -clean-world",
     "watch": "npm run clean && bsb -make-world -w",
     "webpack-test": "webpack -w",

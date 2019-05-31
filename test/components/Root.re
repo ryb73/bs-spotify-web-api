@@ -1,5 +1,6 @@
 open ReDom;
 open ReactLib;
+open Spotify;
 
 type state =
     | Initializing
