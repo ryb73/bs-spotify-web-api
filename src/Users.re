@@ -11,7 +11,7 @@ let _getPlaylists = (~limit=?, ~offset=?, accessToken, path) =>
 
 let playlistsMax = 100;
 let getPlaylists = (~limit=?, ~offset=?, accessToken, userId) => {
-    "/users/" ++ ReDom.encodeUriComponent(userId) ++ "/playlists"
+    "/users/" ++ Js.Global.encodeURIComponent(userId) ++ "/playlists"
         |> _getPlaylists(~limit?, ~offset?, accessToken);
 };
 

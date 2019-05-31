@@ -1,6 +1,7 @@
 open Belt.Result;
-open PromiseEx;
+open PromEx;
 open Api;
+open ReDom;
 
 type player;
 
@@ -64,10 +65,10 @@ type webPlaybackState = {
     shuffle: bool,
 };
 
-[@bs.set] external setPlaybackSdkReadyListener : ReDomSuite.Window.t => (unit => unit) => unit = "onSpotifyWebPlaybackSDKReady";
+[@bs.set] external setPlaybackSdkReadyListener : Window.t => (unit => unit) => unit = "onSpotifyWebPlaybackSDKReady";
 
 let _initialPromise = Js.Promise.make((~resolve, ~reject as _) => {
-    setPlaybackSdkReadyListener(ReDom.window, () => {
+    setPlaybackSdkReadyListener(Window.window, () => {
         let u = ();
         resolve(. u);
     });

@@ -1,4 +1,4 @@
-type scope = /* https://developer.spotify.com/documentation/general/guides/scopes/ */
+type scope = // https://developer.spotify.com/documentation/general/guides/scopes/
     | UserLibraryRead
     | UserLibraryModify
     | PlaylistReadPrivate
@@ -36,8 +36,8 @@ let _singleScopeToStr = fun
 
 let scopesToStr = (scopes) =>
     scopes
-        |> Js.Array.map(_singleScopeToStr)
-        |> Js.Array.joinWith(",");
+    |> Js.Array.map(_singleScopeToStr)
+    |> Js.Array.joinWith(",");
 
 let createAuthorizeUrl = (~state=?, ~forceShowDialog=?, clientId, redirectUri, scopes) => {
     let queryParams = Js.Dict.fromList([

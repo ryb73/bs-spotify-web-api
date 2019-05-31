@@ -1,4 +1,4 @@
-open ReDomSuite;
+open ReDom;
 open ReactLib;
 
 type state =
@@ -45,7 +45,7 @@ let make = (_) => {
                         clientId, "http://localhost:54380/",
                         [| Auth.UserModifyPlaybackState, Auth.Streaming |]
                     )
-                    |> Location.setHref(ReDom.location);
+                    |> Location.setHref;
 
                     send(SetRedirecting);
                 }

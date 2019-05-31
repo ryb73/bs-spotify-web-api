@@ -19,14 +19,14 @@ type state = {
 };
 
 type action =
-  | SetInitialized
-  | SetPlayerName(string)
-  | SetDeviceId(string)
-  | SetContextUri(string)
-  | SetUris(string)
-  | SetPositionMs(string)
-  | ClearPlayer
-  | SetPlayer(Playback.player, string, string);
+    | SetInitialized
+    | SetPlayerName(string)
+    | SetDeviceId(string)
+    | SetContextUri(string)
+    | SetUris(string)
+    | SetPositionMs(string)
+    | ClearPlayer
+    | SetPlayer(Playback.player, string, string);
 
 let deviceIdChanged = (e, { send }) =>
     send(SetDeviceId(ReactEvent.Form.currentTarget(e)##value));
@@ -72,21 +72,21 @@ let make = (~token, _) => {
 
         let player = makePlayer(token, playerName);
         player
-            |> onInitializationError((error) => Js.log2("init error", displayError(error)))
-            |> onAuthenticationError((error) => Js.log2("auth error", displayError(error)))
-            |> onAccountError((error) => Js.log2("acc error", displayError(error)))
-            |> onPlaybackError((error) => Js.log2("bak error", displayError(error)))
-            |> onNotReady((result) => Js.log2("not ready", result))
-            |> onPlayerStateChanged(fun
-                | Ok(None) => send(ClearPlayer)
-                | Ok(Some(state)) => Js.log2("state changed", state)
-                | error => Js.log2("state error", error)
-            )
-            |> onReady(fun
-                | Ok({ device_id }) => send(SetPlayer(player, playerName, device_id))
-                | error => Js.log2("ready but error", error)
-            )
-            |> connect;
+        |> onInitializationError((error) => Js.log2("init error", displayError(error)))
+        |> onAuthenticationError((error) => Js.log2("auth error", displayError(error)))
+        |> onAccountError((error) => Js.log2("acc error", displayError(error)))
+        |> onPlaybackError((error) => Js.log2("bak error", displayError(error)))
+        |> onNotReady((result) => Js.log2("not ready", result))
+        |> onPlayerStateChanged(fun
+            | Ok(None) => send(ClearPlayer)
+            | Ok(Some(state)) => Js.log2("state changed", state)
+            | error => Js.log2("state error", error)
+        )
+        |> onReady(fun
+            | Ok({ device_id }) => send(SetPlayer(player, playerName, device_id))
+            | error => Js.log2("ready but error", error)
+        )
+        |> connect;
     };
 
     let doPlay = (_, { state: { deviceId, contextUri, uris, positionMs }}) => {
@@ -109,8 +109,8 @@ let make = (~token, _) => {
 
         didMount: ({ send }) =>
             Playback.ensureInitialized()
-                |> PromiseEx.map((_) => send(SetInitialized))
-                |> ignore,
+            |> PromEx.map((_) => send(SetInitialized))
+            |> ignore,
 
         render: self => {
             let { handle,

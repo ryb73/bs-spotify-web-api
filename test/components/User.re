@@ -1,5 +1,5 @@
 open ReactLib;
-open PromiseEx;
+open PromEx;
 open ReasonReact;
 
 type user =

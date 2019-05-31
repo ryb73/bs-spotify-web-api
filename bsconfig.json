@@ -2,11 +2,11 @@
     "name": "bs-spotify-web-api",
     "namespace": true,
     "bs-dependencies": [
-        "bs-qs",
-        "bs-superagent",
-        "redom",
-        "bs-promise-ex",
-        "decco",
+        "@ryb73/bs-qs",
+        "@ryb73/bs-superagent",
+        "@ryb73/decco",
+        "@ryb73/prom-ex",
+        "@ryb73/re-dom",
     ],
     "bs-dev-dependencies": [
         "reason-react",
@@ -20,7 +20,7 @@
         }
     ],
     "ppx-flags": [
-        "./node_modules/decco/ppx/ppx_decco.sh"
+        "@ryb73/decco/ppx/ppx_decco.sh"
     ],
     "reason" : { "react-jsx" : 2 },
     "refmt": 3,

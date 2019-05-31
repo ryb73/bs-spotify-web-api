@@ -3,7 +3,7 @@ open Api;
 let tracksMax = 100;
 
 let getTracks = (~fields=?, ~limit=?, ~offset=?, ~market=?, accessToken, playlistId) =>
-    "/playlists/" ++ ReDom.encodeUriComponent(playlistId) ++ "/tracks"
+    "/playlists/" ++ Js.Global.encodeURIComponent(playlistId) ++ "/tracks"
     |> buildGet(accessToken)
     |> setOptionalQueryParam("fields", fields)
     |> setOptionalQueryParam("limit", limit |> Belt.Option.map(_, string_of_int))

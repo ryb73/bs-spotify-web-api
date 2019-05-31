@@ -1,12 +1,12 @@
 open Belt.Result;
-open ReDomSuite;
+open ReDom;
 
 [@decco] type hash = {
     access_token: option(string)
 };
 
 let getAccessTokenFromHash = () => {
-    let parsedHash = Location.hash(ReDom.location)
+    let parsedHash = Location.hash()
         |> Js.String.substr(~from=1)
         |> Qs.parse
         |> hash_decode;
