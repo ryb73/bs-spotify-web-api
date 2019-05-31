@@ -1,5 +1,8 @@
 {
   "name": "@ryb73/bs-spotify-web-api",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "2.0.0",
   "description": "Bucklescript bindings for spotify-web-api",
   "main": "index.js",
@@ -11,6 +14,11 @@
     "clean": "rm -rf lib/ && rm -rf test/js/ && bsb -clean-world",
     "postinstall": "[ ! -f package-links.json ] || ppl link-file"
   },
+  "files": [
+    "/bsconfig.json",
+    "/src",
+    "/lib/js/src"
+  ],
   "keywords": [],
   "license": "MIT",
   "author": "Ryan Biwer",
