@@ -4,7 +4,7 @@
   "description": "Bucklescript bindings for spotify-web-api",
   "main": "index.js",
   "scripts": {
-    "test": "warning \"Error: no test specified\"",
+    "test": "echo \"Warning: no test specified\"",
     "build": "num run clean && bsb -clean-world",
     "watch": "npm run clean && bsb -make-world -w",
     "webpack-test": "webpack -w",
