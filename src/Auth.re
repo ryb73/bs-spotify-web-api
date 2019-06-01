@@ -86,7 +86,7 @@ let getTokensFromCode = (clientId, secret, code,  redirectUri) => {
     |> Js.Dict.map([@bs] ((s) => Js.Json.string(s)))
     |> Js.Json.object_;
 
-    post("https://www.googleapis.com/oauth2/v4/token")
+    post("https://accounts.spotify.com/api/token")
     |> setHeader(ContentType(ApplicationXWwwFormUrlencoded))
     |> send(reqData)
     |> end_
