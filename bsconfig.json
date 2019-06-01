@@ -8,15 +8,19 @@
         "@ryb73/re-dom",
     ],
     "bs-dev-dependencies": [
+        "@glennsl/bs-jest",
         "reason-react",
     ],
     "sources": [
         {
             "dir": "src",
             "public": ["Spotify"],
-        },
-        {
+        }, {
             "dir": "test",
+            "type": "dev",
+            "subdirs": true,
+        }, {
+            "dir": "__tests__",
             "type": "dev",
             "subdirs": true,
         }
