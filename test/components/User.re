@@ -1,106 +1,85 @@
+open React;
 open ReactLib;
 open PromEx;
-open ReasonReact;
 open Spotify;
 
 type user =
   | Me
   | UserId(string);
 
-type state = {
-    user: user,
-    gpLimit: int,
-    gpOffset: int
-};
+[@react.component]
+let make = (~token) => {
+    let (user, setUser) = useState(_ => Me);
+    let (gpLimit, setGpLimit) = useState(_ => 10);
+    let (gpOffset, setGpOffset) = useState(_ => 0);
 
-type action =
-  | SetMe
-  | SetUserId(string)
-  | SetGpLimit(int)
-  | SetGpOffset(int);
+    let idChanged = (e) =>
+        getTargetValue(e)
+        |> (v => setUser(_ => UserId(v)));
 
-let idChanged = (e, { send }) =>
-    send(SetUserId(ReactEvent.Form.currentTarget(e)##value));
+    let gpLimitChanged = (e) =>
+        getTargetValue(e)
+        |> (v => setGpLimit(_ => int_of_string(v)));
 
-let gpLimitChanged = (e, { send }) =>
-    send(SetGpLimit(int_of_string(ReactEvent.Form.currentTarget(e)##value)));
+    let gpOffsetChanged = (e) =>
+        getTargetValue(e)
+        |> (v => setGpOffset(_ => int_of_string(v)));
 
-let gpOffsetChanged = (e, { send }) =>
-    send(SetGpOffset(int_of_string(ReactEvent.Form.currentTarget(e)##value)));
-
-let meClicked = (_, { send }) => send(SetMe);
-let otherClicked = (_, { send }) => send(SetUserId(""));
-
-let renderIdField = ({ state, handle }) =>
-    switch state.user {
-        | Me => null
-        | UserId(id) =>
-            <input type_="text" value=id placeholder="user id"
-                onChange=(handle(idChanged)) />
-    };
-
-let component = reducerComponent("User");
-let make = (~token, _) => {
-    let doGet = (_, { state }) =>
-        switch state.user {
+    let doGet = (_) =>
+        switch user {
             | Me => Users.me(token)
                 |> map(Js.log);
 
             | UserId(_) => failwith("not implemented")
         } |> ignore;
 
-    let doGetPlaylists = (_, { state: { user, gpLimit, gpOffset } }) => {
+    let doGetPlaylists = (_) => {
         switch user {
             | Me => Users.getMyPlaylists(~limit=gpLimit, ~offset=gpOffset, token)
-            | UserId(id) => Users.getPlaylists(~limit=gpLimit, ~offset=gpOffset, token, id)
+            | UserId(id) =>
+                Users.getPlaylists(~limit=gpLimit, ~offset=gpOffset, token, id)
         }
         |> map(Js.log);
         ();
     };
 
-    {
-        ...component,
+    let meClicked = (_) => setUser(_ => Me);
+    let otherClicked = (_) => setUser(_ => UserId(""));
 
-        render: ({ handle, state: { user, gpLimit, gpOffset } } as self) =>
-            <form className="col card" onSubmit=noopSubmit>
-                <h2>(s2e("User"))</h2>
+    <form className="col card" onSubmit=noopSubmit>
+        <h2>(s2e("User"))</h2>
 
-                <div>
-                    <label>
-                        <input type_="radio" name="user" value="me"
-                            checked={user == Me} onChange=(handle(meClicked)) />
-                        (s2e("Me"))
-                    </label>
-                    <label>
-                        <input type_="radio" name="user" value="other"
-                            checked={user != Me} onChange=(handle(otherClicked)) />
-                        (s2e("Other User"))
-                    </label>
-                    (renderIdField(self))
-                </div>
+        <div>
+            <label>
+                <input type_="radio" name="user" value="me"
+                    checked={user == Me} onChange=meClicked />
+                (s2e("Me"))
+            </label>
+            <label>
+                <input type_="radio" name="user" value="other"
+                    checked={user != Me} onChange=otherClicked />
+                (s2e("Other User"))
+            </label>
 
-                <div><button onClick=handle(doGet)>(s2e("Get"))</button></div>
+            (switch user {
+                | Me => null
+                | UserId(id) =>
+                    <input type_="text" value=id placeholder="user id"
+                        onChange=idChanged />
+            })
+        </div>
 
-                <div>
-                    <button onClick=handle(doGetPlaylists)>
-                        (s2e("Get Playlists"))
-                    </button>
+        <div><button onClick=doGet>(s2e("Get"))</button></div>
 
-                    <input type_="text" placeholder="limit" style=width("48px")
-                        value=string_of_int(gpLimit) onChange=handle(gpLimitChanged) />
-                    <input type_="text" placeholder="offset" style=width("48px")
-                        value=string_of_int(gpOffset) onChange=handle(gpOffsetChanged) />
-                </div>
-            </form>,
+        <div>
+            <button onClick=doGetPlaylists>
+                (s2e("Get Playlists"))
+            </button>
 
-        initialState: (_) => { user: Me, gpLimit: 10, gpOffset: 0 },
-
-        reducer: (action, state) =>
-            switch action {
-                | SetMe => Update({ ...state, user: Me })
-                | SetUserId(id) => Update({ ...state, user: UserId(id) })
-                | SetGpLimit(gpLimit) => Update({ ...state, gpLimit })
-                | SetGpOffset(gpOffset) => Update({ ...state, gpOffset })
-            },
-    }
+            <input type_="text" placeholder="limit" style=width("48px")
+                value=string_of_int(gpLimit) onChange=gpLimitChanged />
+            <input type_="text" placeholder="offset" style=width("48px")
+                value=string_of_int(gpOffset) onChange=gpOffsetChanged />
+        </div>
+    </form>;
 };

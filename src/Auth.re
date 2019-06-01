@@ -1,20 +1,9 @@
-type scope = // https://developer.spotify.com/documentation/general/guides/scopes/
-    | UserLibraryRead
-    | UserLibraryModify
-    | PlaylistReadPrivate
-    | PlaylistModifyPublic
-    | PlaylistModifyPrivate
-    | PlaylistReadCollaborative
-    | UserReadRecentlyPlayed
-    | UserTopRead
-    | UserReadPrivate
-    | UserReadEmail
-    | UserReadBirthdate
-    | Streaming
-    | AppRemoteControl
-    | UserModifyPlaybackState
-    | UserFollowModify
-    | UserFollowRead;
+type scope =
+    | UserLibraryRead | UserLibraryModify | PlaylistReadPrivate | PlaylistModifyPublic
+    | PlaylistModifyPrivate | PlaylistReadCollaborative | UserReadRecentlyPlayed
+    | UserTopRead | UserReadPrivate | UserReadEmail | UserReadBirthdate
+    | UserReadPlaybackState | UserReadCurrentlyPlaying | Streaming | AppRemoteControl
+    | UserModifyPlaybackState | UserFollowModify | UserFollowRead;
 
 let _singleScopeToStr = fun
     | UserLibraryRead => "user-library-read"
@@ -28,24 +17,26 @@ let _singleScopeToStr = fun
     | UserReadPrivate => "user-read-private"
     | UserReadEmail => "user-read-email"
     | UserReadBirthdate => "user-read-birthdate"
+    | UserReadPlaybackState => "user-read-playback-state"
+    | UserReadCurrentlyPlaying => "user-read-currently-playing"
     | Streaming => "streaming"
     | AppRemoteControl => "app-remote-control"
     | UserModifyPlaybackState => "user-modify-playback-state"
     | UserFollowModify => "user-follow-modify"
     | UserFollowRead => "user-follow-read";
 
-let scopesToStr = (scopes) =>
-    scopes
+let scopeToStr = (scope) =>
+    scope
     |> Js.Array.map(_singleScopeToStr)
     |> Js.Array.joinWith(",");
 
-// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scopes) => url
-let createAuthorizeUrl = (~state=?, ~forceShowDialog=?, clientId, redirectUri, scopes) => {
+// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope) => url
+let createAuthorizeUrl = (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope) => {
     let queryParams = Js.Dict.fromList([
         ("client_id", Js.Json.string(clientId)),
         ("response_type", Js.Json.string("token")),
         ("redirect_uri", Js.Json.string(redirectUri)),
-        ("scope", scopes |> scopesToStr |> Js.Json.string)
+        ("scope", scope |> Access.scopeToString |> Js.Json.string)
     ]);
 
     switch state {
