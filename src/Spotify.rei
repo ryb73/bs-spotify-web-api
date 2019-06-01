@@ -140,7 +140,8 @@ open Types;
 module Auth: {
     let createAuthorizeUrl:
         (~state: string=?, ~forceShowDialog: bool=?, string, string,
-          Access.scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_))
+          Access.scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_),
+          [< `Code | `Token ])
         => string;
 };
 

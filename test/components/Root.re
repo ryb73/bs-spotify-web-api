@@ -43,7 +43,8 @@ let make = () => {
             | None => {
                 Auth.createAuthorizeUrl(
                     clientId, "http://localhost:54380/",
-                    scope
+                    scope,
+                    `Token
                 )
                 |> Location.setHref;
 

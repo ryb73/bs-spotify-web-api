@@ -30,24 +30,26 @@ let scopeToStr = (scope) =>
     |> Js.Array.map(_singleScopeToStr)
     |> Js.Array.joinWith(",");
 
-// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope) => url
-let createAuthorizeUrl = (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope) => {
-    let queryParams = Js.Dict.fromList([
-        ("client_id", Js.Json.string(clientId)),
-        ("response_type", Js.Json.string("token")),
-        ("redirect_uri", Js.Json.string(redirectUri)),
-        ("scope", scope |> Access.scopeToString |> Js.Json.string)
-    ]);
+// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => url
+let createAuthorizeUrl =
+    (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => {
+        let queryParams = Js.Dict.fromList([
+            ("client_id", Js.Json.string(clientId)),
+            ("redirect_uri", Js.Json.string(redirectUri)),
+            ("scope", scope |> Access.scopeToString |> Js.Json.string),
+            ("response_type", switch responseType {
+                | `Token => Js.Json.string("token")
+                | `Code => Js.Json.string("code")
+            }),
+        ]);
 
-    switch state {
-        | Some(s) => Js.Dict.set(queryParams, "state", Js.Json.string(s))
-        | None => ()
+        state
+        -> Belt.Option.map(Js.Json.string)
+        -> Belt.Option.map(Js.Dict.set(queryParams, "state"));
+
+        forceShowDialog
+        -> Belt.Option.map(Js.Json.boolean)
+        -> Belt.Option.map(Js.Dict.set(queryParams, "show_dialog"));
+
+        "https://accounts.spotify.com/authorize?" ++ Qs.stringify(queryParams);
     };
-
-    switch forceShowDialog {
-        | Some(fsd) => Js.Dict.set(queryParams, "show_dialog", Js.Json.boolean(fsd))
-        | None => ()
-    };
-
-    "https://accounts.spotify.com/authorize?" ++ Qs.stringify(queryParams);
-};
