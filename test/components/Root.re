@@ -44,7 +44,8 @@ let make = (_) => {
                 | None => {
                     Auth.createAuthorizeUrl(
                         clientId, "http://localhost:54380/",
-                        [| Auth.UserModifyPlaybackState, Auth.Streaming |]
+                        [| Auth.UserModifyPlaybackState, Auth.Streaming |],
+                        `Token
                     )
                     |> Location.setHref;
 

@@ -58,7 +58,8 @@ module Auth: {
         | UserFollowModify | UserFollowRead;
     let createAuthorizeUrl:
         (~state: string=?, ~forceShowDialog: bool=?, string, string,
-        Js.Array.t(scope)) => string;
+          Js.Array.t(scope), [< `Code | `Token ])
+        => string;
 };
 
 module Playback: {
