@@ -177,4 +177,10 @@ module Users: {
 module Api: {
     let buildGet: (token(_), string) => Superagent.request(Superagent.get);
     let buildPut: (token(_), string) => Superagent.request(Superagent.put);
+    let setOptionalQueryParam:
+        (Js.Dict.key, option(string), Superagent.request('a))
+        => Superagent.request('a);
+    let setOptionalParam:
+        (Js.Dict.key, option(Js.Json.t), Superagent.request(Superagent.acceptsBody))
+        => Superagent.request(Superagent.acceptsBody);
 };
