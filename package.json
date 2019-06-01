@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "npm run clean && bsb -clean-world",
+    "build": "npm run clean && bsb -make-world",
     "watch": "npm run clean && bsb -make-world -w",
     "webpack-test": "webpack -w",
     "clean": "rm -rf lib/ && rm -rf test/js/ && bsb -clean-world",
