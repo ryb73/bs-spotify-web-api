@@ -8,14 +8,6 @@ type tokens = {
     expires_in: int
 };
 
-
-[@decco]
-type tokens = {
-    access_token: string,
-    refresh_token: option(string),
-    expires_in: int
-};
-
 // (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => url
 let createAuthorizeUrl =
     (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => {
