@@ -50,6 +50,12 @@ module Types: {
 open Types;
 
 module Auth: {
+    [@decco]
+    type tokens = {
+        access_token: string,
+        refresh_token: option(string),
+        expires_in: int
+    };
     type scope =
         | UserLibraryRead | UserLibraryModify | PlaylistReadPrivate
         | PlaylistModifyPublic | PlaylistModifyPrivate | PlaylistReadCollaborative
@@ -60,6 +66,7 @@ module Auth: {
         (~state: string=?, ~forceShowDialog: bool=?, string, string,
           Js.Array.t(scope), [< `Code | `Token ])
         => string;
+    let getTokensFromCode: (string, string, string, string) => Js.Promise.t(tokens);
 };
 
 module Playback: {
