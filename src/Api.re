@@ -18,6 +18,7 @@ let buildGet = (accessToken, path) => Superagent.(
     |> setHeader(Authorization(Bearer, accessToken))
 );
 
+/** (accessToken, path) => request */
 let buildPut = (accessToken, path) => Superagent.(
     put("https://api.spotify.com/v1" ++ path)
     |> setHeader(Authorization(Bearer, accessToken))

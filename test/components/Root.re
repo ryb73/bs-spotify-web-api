@@ -19,14 +19,14 @@ let scope = Access.(scope
 // |> withPlaylistReadCollaborative
 // |> withUserReadRecentlyPlayed
 // |> withUserTopRead
-|> withUserReadPrivate
+/* |> withUserReadPrivate
 |> withUserReadEmail
-|> withUserReadBirthdate
+|> withUserReadBirthdate */
 // |> withUserReadPlaybackState
 // |> withUserReadCurrentlyPlaying
-|> withStreaming
+/* |> withStreaming */
 // |> withAppRemoteControl
-|> withUserModifyPlaybackState
+/* |> withUserModifyPlaybackState */
 // |> withUserFollowModify
 // |> withUserFollowRead
 );

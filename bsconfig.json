@@ -5,10 +5,10 @@
         "@ryb73/bs-superagent",
         "@ryb73/decco",
         "@ryb73/prom-ex",
-        "@ryb73/re-dom",
     ],
     "bs-dev-dependencies": [
         "@glennsl/bs-jest",
+        "@ryb73/re-dom",
         "reason-react",
     ],
     "sources": [
