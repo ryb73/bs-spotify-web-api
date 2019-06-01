@@ -1,6 +1,7 @@
 module Access: {
     type o;
     type x;
+    /** Labelled types included for better error messages */
     type userLibraryRead = o;
     type userLibraryModify = o;
     type playlistReadPrivate = o;
@@ -22,6 +23,7 @@ module Access: {
 
     type scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_);
     let scope: scope(x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x);
+    let all: scope(o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o);
 
     let withUserLibraryRead:
         scope(_,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
@@ -80,7 +82,7 @@ module Access: {
 
     type token('a);
     let token:
-        (~limitScope: scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h,'j),
+        (~limitScope: scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h,'j)=?,
           string)
           => token(scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h,'j));
 };

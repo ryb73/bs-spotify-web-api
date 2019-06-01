@@ -42,9 +42,20 @@ let withUserModifyPlaybackState = Js.Array.concat([|"user-modify-playback-state"
 let withUserFollowModify = Js.Array.concat([|"user-follow-modify"|]);
 let withUserFollowRead = Js.Array.concat([|"user-follow-read"|]);
 
+let all = scope
+    |> withUserLibraryRead |> withUserLibraryModify |> withPlaylistReadPrivate
+    |> withPlaylistModifyPublic |> withPlaylistModifyPrivate
+    |> withPlaylistReadCollaborative |> withUserReadRecentlyPlayed |> withUserTopRead
+    |> withUserReadPrivate |> withUserReadEmail |> withUserReadBirthdate
+    |> withUserReadPlaybackState |> withUserReadCurrentlyPlaying |> withStreaming
+    |> withAppRemoteControl |> withUserModifyPlaybackState |> withUserFollowModify
+    |> withUserFollowRead;
+
 let scopeToString = (scope: scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)) =>
     Js.Array.joinWith(",", scope);
 
 type token('scope) = string;
-let token = (type scope, ~limitScope as _: scope, token: string): token(scope) =>
-    Obj.magic(token);
+let token = (~limitScope as _=all, token) =>
+    /* limitScope is used in conjunction with the type annotation in Spotify.rei
+        to strongly type the token based on the scope for which it was created */
+    token;
