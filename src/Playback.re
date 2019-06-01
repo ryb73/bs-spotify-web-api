@@ -79,7 +79,7 @@ let ensureInitialized = () => _initialPromise;
 [@bs.scope "Spotify"] [@bs.new]
 external _makePlayer: Js.t({..}) => player = "Player";
 
-let makePlayer = (accessToken, name) =>
+let makePlayer = (accessToken: Access.token(_), name: string) =>
     _makePlayer({
         "name": name,
         "getOAuthToken": (cb) => cb(accessToken)

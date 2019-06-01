@@ -1,64 +1,46 @@
+open React;
 open ReactLib;
 open PromEx;
-open ReasonReact;
 open Spotify;
 
-type state = {
-    id: string,
-    gtLimit: int,
-    gtOffset: int
-};
+[@react.component]
+let make = (~token) => {
+    let (id, setId) = useState(_ => "");
+    let (gtLimit, setGtLimit) = useState(_ => 10);
+    let (gtOffset, setGtOffset) = useState(_ => 0);
 
-type action =
-  | SetId(string)
-  | SetGtLimit(int)
-  | SetGtOffset(int);
-
-let idChanged = (e, { send }) =>
-    send(SetId(ReactEvent.Form.currentTarget(e)##value));
-
-let gtLimitChanged = (e, { send }) =>
-    send(SetGtLimit(int_of_string(ReactEvent.Form.currentTarget(e)##value)));
-
-let gtOffsetChanged = (e, { send }) =>
-    send(SetGtOffset(int_of_string(ReactEvent.Form.currentTarget(e)##value)));
-
-let component = reducerComponent("Playlist");
-let make = (~token, _) => {
-    let doGetTracks = (_, { state: { id, gtLimit, gtOffset } }) =>
+    let doGetTracks = (_) =>
         Playlists.getTracks(~limit=gtLimit, ~offset=gtOffset, token, id)
             |> map(Js.log)
             |> ignore;
 
-    {
-        ...component,
+    let idChanged = (e) =>
+        getTargetValue(e)
+        |> (v => setId(_ => v));
 
-        render: ({ handle, state: { id, gtLimit, gtOffset } }) =>
-            <form className="col card" onSubmit=noopSubmit>
-                <h2>(s2e("Playlist"))</h2>
+    let gtLimitChanged = (e) =>
+        getTargetValue(e)
+        |> (v => setGtLimit(_ => int_of_string(v)));
 
-                <div>
-                    <input type_="text" value=id placeholder="playlist id"
-                        onChange=(handle(idChanged)) />
-                </div>
+    let gtOffsetChanged = (e) =>
+        getTargetValue(e)
+        |> (v => setGtOffset(_ => int_of_string(v)));
 
-                <div>
-                    <button onClick=handle(doGetTracks)>(s2e("GetTracks"))</button>
+    <form className="col card" onSubmit=noopSubmit>
+        <h2>(s2e("Playlist"))</h2>
 
-                    <input type_="text" placeholder="limit" style=width("48px")
-                        value=string_of_int(gtLimit) onChange=handle(gtLimitChanged) />
-                    <input type_="text" placeholder="offset" style=width("48px")
-                        value=string_of_int(gtOffset) onChange=handle(gtOffsetChanged) />
-                </div>
-            </form>,
+        <div>
+            <input type_="text" value=id placeholder="playlist id"
+                onChange=idChanged />
+        </div>
 
-        initialState: (_) => { id: "", gtLimit: 10, gtOffset: 0 },
+        <div>
+            <button onClick=doGetTracks>(s2e("GetTracks"))</button>
 
-        reducer: (action, state) =>
-            switch action {
-                | SetId(id) => Update({ ...state, id })
-                | SetGtLimit(gtLimit) => Update({ ...state, gtLimit })
-                | SetGtOffset(gtOffset) => Update({ ...state, gtOffset })
-            },
-    }
+            <input type_="text" placeholder="limit" style=width("48px")
+                value=string_of_int(gtLimit) onChange=gtLimitChanged />
+            <input type_="text" placeholder="offset" style=width("48px")
+                value=string_of_int(gtOffset) onChange=gtOffsetChanged />
+        </div>
+    </form>;
 };

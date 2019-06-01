@@ -1,3 +1,91 @@
+module Access: {
+    type o;
+    type x;
+    type userLibraryRead = o;
+    type userLibraryModify = o;
+    type playlistReadPrivate = o;
+    type playlistModifyPublic = o;
+    type playlistModifyPrivate = o;
+    type playlistReadCollaborative = o;
+    type userReadRecentlyPlayed = o;
+    type userTopRead = o;
+    type userReadPrivate = o;
+    type userReadEmail = o;
+    type userReadBirthdate = o;
+    type userReadPlaybackState = o;
+    type userReadCurrentlyPlaying = o;
+    type streaming = o;
+    type appRemoteControl = o;
+    type userModifyPlaybackState = o;
+    type userFollowModify = o;
+    type userFollowRead = o;
+
+    type scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_);
+    let scope: scope(x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x);
+
+    let withUserLibraryRead:
+        scope(_,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope(o,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserLibraryModify:
+        scope('s1,_,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,o,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withPlaylistReadPrivate:
+        scope('s1,'s2,_,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,o,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withPlaylistModifyPublic:
+        scope('s1,'s2,'s3,_,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,o,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withPlaylistModifyPrivate:
+        scope('s1,'s2,'s3,'s4,_,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,o,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withPlaylistReadCollaborative:
+        scope('s1,'s2,'s3,'s4,'s4,_,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s4,o,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserReadRecentlyPlayed:
+        scope('s1,'s2,'s3,'s4,'s4,'s5,_,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s4,'s5,o,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserTopRead:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,_,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,o,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserReadPrivate:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,_,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,o,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserReadEmail:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,_,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,o,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserReadBirthdate:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,_,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,o,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserReadPlaybackState:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,_,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,o,'s13,'s14,'s15,'s16,'s17,'s18);
+    let withUserReadCurrentlyPlaying:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,_,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,o,'s14,'s15,'s16,'s17,'s18);
+    let withStreaming:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,_,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,o,'s15,'s16,'s17,'s18);
+    let withAppRemoteControl:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,_,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,o,'s16,'s17,'s18);
+    let withUserModifyPlaybackState:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,_,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,o,'s17,'s18);
+    let withUserFollowModify:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,_,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,o,'s18);
+    let withUserFollowRead:
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,_) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,o);
+
+    type token('a);
+    let token:
+        (~limitScope: scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h,'j),
+          string)
+          => token(scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h,'j));
+};
+open Access;
+
 module Types: {
     module User: {
         [@decco] type id = string;
@@ -50,15 +138,9 @@ module Types: {
 open Types;
 
 module Auth: {
-    type scope =
-        | UserLibraryRead | UserLibraryModify | PlaylistReadPrivate
-        | PlaylistModifyPublic | PlaylistModifyPrivate | PlaylistReadCollaborative
-        | UserReadRecentlyPlayed | UserTopRead | UserReadPrivate | UserReadEmail
-        | UserReadBirthdate | Streaming | AppRemoteControl | UserModifyPlaybackState
-        | UserFollowModify | UserFollowRead;
     let createAuthorizeUrl:
         (~state: string=?, ~forceShowDialog: bool=?, string, string,
-          Js.Array.t(scope), [< `Code | `Token ])
+          Access.scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_))
         => string;
 };
 
@@ -104,9 +186,14 @@ module Playback: {
         shuffle: bool,
     };
     let ensureInitialized: unit => Js.Promise.t(unit);
-    let makePlayer: ('a, 'b) => player;
+    /** (token, playerName) => player */
+    let makePlayer:
+        (token(scope(_,_,_,_,_,_,_,_,userReadPrivate,userReadEmail,userReadBirthdate,_,_,streaming,_,_,_,_)),
+         string)
+        => player;
     let connect: player => unit;
     let disconnect: player => unit;
+
     let onInitializationError:
         (Belt.Result.t(error, Decco.decodeError) => unit, player) => player;
     let onAuthenticationError:
@@ -124,30 +211,39 @@ module Playback: {
     let onPlayerStateChanged:
         (Belt.Result.t(option(webPlaybackState), Decco.decodeError) => unit,
         player) => player;
+
     let play:
-        (~deviceId: string=?, ~positionMs: int=?, string) => Js.Promise.t(unit);
+        (~deviceId: string=?, ~positionMs: int=?,
+          token(scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,userModifyPlaybackState,_,_)))
+        => Js.Promise.t(unit);
     let playContext:
-        (~deviceId: string=?, ~positionMs: int=?, string, string) =>
-        Js.Promise.t(unit);
+        (~deviceId: string=?, ~positionMs: int=?,
+          token(scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,userModifyPlaybackState,_,_)),
+          string)
+        => Js.Promise.t(unit);
     let playUris:
-        (~deviceId: string=?, ~positionMs: int=?, string,
-        Js.Array.t(string)) => Js.Promise.t(unit);
+        (~deviceId: string=?, ~positionMs: int=?,
+          token(scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,userModifyPlaybackState,_,_)),
+          Js.Array.t(string))
+        => Js.Promise.t(unit);
 };
 
 module Playlists: {
     let tracksMax: int;
     let getTracks:
         (~fields: string=?, ~limit: int=?, ~offset: int=?, ~market: string=?,
-        string, string) => Js.Promise.t(Api.page(PlaylistTrack.t));
+          token(_), string)
+        => Js.Promise.t(Api.page(PlaylistTrack.t));
 };
 
 module Users: {
-    let me: string => Js.Promise.t(User.t);
+    // TODO: link scope typing to type of user result?
+    let me: token(scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)) => Js.Promise.t(User.t);
     let playlistsMax: int;
     let getPlaylists:
-        (~limit: int=?, ~offset: int=?, string, string) =>
+        (~limit: int=?, ~offset: int=?, token(_), string) =>
         Js.Promise.t(Api.page(Playlist.t));
     let getMyPlaylists:
-        (~limit: int=?, ~offset: int=?, string) =>
+        (~limit: int=?, ~offset: int=?, token(_)) =>
         Js.Promise.t(Api.page(Playlist.t));
 };
