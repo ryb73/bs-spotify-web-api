@@ -32,31 +32,7 @@ let createAuthorizeUrl =
         "https://accounts.spotify.com/authorize?" ++ Qs.stringify(queryParams);
 };
 
-/** (clienetId, secret, code, redirectUri) => tokens */
-let getTokensFromCode = (clientId, secret, code,  redirectUri) => {
-    let reqData = [|
-        ("client_id", clientId),
-        ("client_secret", secret),
-        ("grant_type", "authorization_code"),
-        ("code", code),
-        ("redirect_uri", redirectUri)
-    |]
-    |> Js.Dict.fromArray
-    |> Js.Dict.map([@bs] ((s) => Js.Json.string(s)))
-    |> Js.Json.object_;
-
-    post("https://www.googleapis.com/oauth2/v4/token")
-    |> setHeader(ContentType(ApplicationXWwwFormUrlencoded))
-    |> send(reqData)
-    |> end_
-    |> map(({ body }) => body
-        |> Belt.Option.getExn
-        |> tokens_decode
-    )
-    |> unwrapResult;
-    };
-
-/** (clienetId, secret, code, redirectUri) => tokens */
+/** (clientId, secret, code, redirectUri) => tokens */
 let getTokensFromCode = (clientId, secret, code,  redirectUri) => {
     let reqData = [|
         ("client_id", clientId),
