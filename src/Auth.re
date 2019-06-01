@@ -1,5 +1,5 @@
-open Superagent;
 open PromEx;
+open Superagent;
 
 [@decco]
 type tokens = {
@@ -8,37 +8,13 @@ type tokens = {
     expires_in: int
 };
 
-type scope =
-    | UserLibraryRead | UserLibraryModify | PlaylistReadPrivate | PlaylistModifyPublic
-    | PlaylistModifyPrivate | PlaylistReadCollaborative | UserReadRecentlyPlayed
-    | UserTopRead | UserReadPrivate | UserReadEmail | UserReadBirthdate
-    | UserReadPlaybackState | UserReadCurrentlyPlaying | Streaming | AppRemoteControl
-    | UserModifyPlaybackState | UserFollowModify | UserFollowRead;
 
-let _singleScopeToStr = fun
-    | UserLibraryRead => "user-library-read"
-    | UserLibraryModify => "user-library-modify"
-    | PlaylistReadPrivate => "playlist-read-private"
-    | PlaylistModifyPublic => "playlist-modify-public"
-    | PlaylistModifyPrivate => "playlist-modify-private"
-    | PlaylistReadCollaborative => "playlist-read-collaborative"
-    | UserReadRecentlyPlayed => "user-read-recently-played"
-    | UserTopRead => "user-top-read"
-    | UserReadPrivate => "user-read-private"
-    | UserReadEmail => "user-read-email"
-    | UserReadBirthdate => "user-read-birthdate"
-    | UserReadPlaybackState => "user-read-playback-state"
-    | UserReadCurrentlyPlaying => "user-read-currently-playing"
-    | Streaming => "streaming"
-    | AppRemoteControl => "app-remote-control"
-    | UserModifyPlaybackState => "user-modify-playback-state"
-    | UserFollowModify => "user-follow-modify"
-    | UserFollowRead => "user-follow-read";
-
-let scopeToStr = (scope) =>
-    scope
-    |> Js.Array.map(_singleScopeToStr)
-    |> Js.Array.joinWith(",");
+[@decco]
+type tokens = {
+    access_token: string,
+    refresh_token: option(string),
+    expires_in: int
+};
 
 // (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => url
 let createAuthorizeUrl =
