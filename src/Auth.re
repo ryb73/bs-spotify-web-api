@@ -8,23 +8,12 @@ type tokens = {
     expires_in: int
 };
 
-type scope = // https://developer.spotify.com/documentation/general/guides/scopes/
-    | UserLibraryRead
-    | UserLibraryModify
-    | PlaylistReadPrivate
-    | PlaylistModifyPublic
-    | PlaylistModifyPrivate
-    | PlaylistReadCollaborative
-    | UserReadRecentlyPlayed
-    | UserTopRead
-    | UserReadPrivate
-    | UserReadEmail
-    | UserReadBirthdate
-    | Streaming
-    | AppRemoteControl
-    | UserModifyPlaybackState
-    | UserFollowModify
-    | UserFollowRead;
+type scope =
+    | UserLibraryRead | UserLibraryModify | PlaylistReadPrivate | PlaylistModifyPublic
+    | PlaylistModifyPrivate | PlaylistReadCollaborative | UserReadRecentlyPlayed
+    | UserTopRead | UserReadPrivate | UserReadEmail | UserReadBirthdate
+    | UserReadPlaybackState | UserReadCurrentlyPlaying | Streaming | AppRemoteControl
+    | UserModifyPlaybackState | UserFollowModify | UserFollowRead;
 
 let _singleScopeToStr = fun
     | UserLibraryRead => "user-library-read"
@@ -38,24 +27,26 @@ let _singleScopeToStr = fun
     | UserReadPrivate => "user-read-private"
     | UserReadEmail => "user-read-email"
     | UserReadBirthdate => "user-read-birthdate"
+    | UserReadPlaybackState => "user-read-playback-state"
+    | UserReadCurrentlyPlaying => "user-read-currently-playing"
     | Streaming => "streaming"
     | AppRemoteControl => "app-remote-control"
     | UserModifyPlaybackState => "user-modify-playback-state"
     | UserFollowModify => "user-follow-modify"
     | UserFollowRead => "user-follow-read";
 
-let scopesToStr = (scopes) =>
-    scopes
+let scopeToStr = (scope) =>
+    scope
     |> Js.Array.map(_singleScopeToStr)
     |> Js.Array.joinWith(",");
 
-// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scopes, responseType) => url
+// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => url
 let createAuthorizeUrl =
-    (~state=?, ~forceShowDialog=?, clientId, redirectUri, scopes, responseType) => {
+    (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => {
         let queryParams = Js.Dict.fromList([
             ("client_id", Js.Json.string(clientId)),
             ("redirect_uri", Js.Json.string(redirectUri)),
-            ("scope", scopes |> scopesToStr |> Js.Json.string),
+            ("scope", scope |> Access.scopeToString |> Js.Json.string),
             ("response_type", switch responseType {
                 | `Token => Js.Json.string("token")
                 | `Code => Js.Json.string("code")
@@ -71,6 +62,30 @@ let createAuthorizeUrl =
         -> Belt.Option.map(Js.Dict.set(queryParams, "show_dialog"));
 
         "https://accounts.spotify.com/authorize?" ++ Qs.stringify(queryParams);
+};
+
+/** (clienetId, secret, code, redirectUri) => tokens */
+let getTokensFromCode = (clientId, secret, code,  redirectUri) => {
+    let reqData = [|
+        ("client_id", clientId),
+        ("client_secret", secret),
+        ("grant_type", "authorization_code"),
+        ("code", code),
+        ("redirect_uri", redirectUri)
+    |]
+    |> Js.Dict.fromArray
+    |> Js.Dict.map([@bs] ((s) => Js.Json.string(s)))
+    |> Js.Json.object_;
+
+    post("https://www.googleapis.com/oauth2/v4/token")
+    |> setHeader(ContentType(ApplicationXWwwFormUrlencoded))
+    |> send(reqData)
+    |> end_
+    |> map(({ body }) => body
+        |> Belt.Option.getExn
+        |> tokens_decode
+    )
+    |> unwrapResult;
     };
 
 /** (clienetId, secret, code, redirectUri) => tokens */

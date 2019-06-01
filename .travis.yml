@@ -13,6 +13,5 @@ deploy:
   email: rpbiwer@gmail.com
   on:
     tags: true
-    branch: master
   api_key:
     secure: Z3DuOqi9Sy5dZLKgQ52sTBt3GLBpppFye4DAbbGxmgCWhn/CSFjyb1C36Kz/VjogZMaVAuRA4zGy8QvhZDpytDlDi2RcdhfOtLN3srdbgi8+4i3cwOHxQdzxZyih5CobHZ+X/kG42H+NXgskdFbIebJCY3CkYtUkdHJ1Dj+c1zDluhuMQu4xG2eSTgrXI9hPxxzXvW1bDvZemI2TPvea60YoHyL5h7IKj7pbccxGktwNNOFtzANf7IApBiTYOyPovFHpMMS7yxyjpL2Dw8Z8OyjlcJC2LuxQetIccuJpKzAm5ov584Cc9fhCuyxO4+Zijv1K0dQR1+lz1XihbDIURH85q+NOYhtWNoFqNNeW9wLZ4Je9TxDimHhk5r41a2DQKlpto9CDuaWzBQ6SS3ewqMyGMKrL/wfInDbvjXp7apwUP1AVsoXBb/NQTssba0PUrHqjbO9U8EIkj3oN4MHGZ8/r9pp9hWnU3G8kVf293TyDrlV4XEabdCIwZwRinawvvM7zvVWk++UO+TvSsXdh9sxoM8/fu+dFWtc8/6o8SAWN8+kHO3M7iHsW3RK4gOgp8M78uy2BLtNkaQw/+ALqMgJ8i4QTFsSnZMgp8eza0Ct3J4/oYFz1BZ4uxlxvPHhbxWsZOZpzv3Ml+x8ARZeZwzODpL4MZKfSu713PtlZv5E=
