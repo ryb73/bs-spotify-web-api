@@ -1,15 +1,7 @@
+open React;
 open ReDom;
 open ReactLib;
 open Spotify;
-
-type state =
-    | Initializing
-    | Loaded(string)
-    | Redirecting;
-
-type action =
-    | SetRedirecting
-    | SetLoaded(string);
 
 [@decco] type config = { clientId: string };
 [@bs.module] external config : Js.Json.t = "../../../../config.json";
@@ -18,39 +10,53 @@ let clientId = switch (config_decode(config)) {
     | _ => failwith("Invalid config")
 };
 
-let component = ReasonReact.reducerComponent("Root");
-let make = (_) => {
-    {
-        ...component,
+let scope = Access.(scope
+// |> withUserLibraryRead
+// |> withUserLibraryModify
+// |> withPlaylistReadPrivate
+// |> withPlaylistModifyPublic
+// |> withPlaylistModifyPrivate
+// |> withPlaylistReadCollaborative
+// |> withUserReadRecentlyPlayed
+// |> withUserTopRead
+|> withUserReadPrivate
+|> withUserReadEmail
+|> withUserReadBirthdate
+// |> withUserReadPlaybackState
+// |> withUserReadCurrentlyPlaying
+|> withStreaming
+// |> withAppRemoteControl
+|> withUserModifyPlaybackState
+// |> withUserFollowModify
+// |> withUserFollowRead
+);
 
-        render: ({ state }) =>
-            switch state {
-                | Initializing => <div>(s2e("loading..."))</div>
-                | Redirecting => <div>(s2e("redirecting..."))</div>
-                | Loaded(token) => <TestTool token />
-            },
+[@react.component]
+let make = () => {
+    let (redirecting, setRedirecting) = useState(_ => false);
+    let (token, setToken) = useState(_ => None);
 
-        initialState: (_) => Initializing,
+    useEffect0(() => {
+        switch (OAuth.getAccessTokenFromHash()) {
+            | Some(token) =>
+                setToken(_ => Some(Access.token(~limitScope=scope, token)))
+            | None => {
+                Auth.createAuthorizeUrl(
+                    clientId, "http://localhost:54380/",
+                    scope,
+                    `Token
+                )
+                |> Location.setHref;
 
-        reducer: (action, _) =>
-            switch action {
-                | SetRedirecting => ReasonReact.Update(Redirecting)
-                | SetLoaded(token) => ReasonReact.Update(Loaded(token))
-            },
-
-        didMount: ({ send }) =>
-            switch (OAuth.getAccessTokenFromHash()) {
-                | Some(token) => send(SetLoaded(token))
-                | None => {
-                    Auth.createAuthorizeUrl(
-                        clientId, "http://localhost:54380/",
-                        [| Auth.UserModifyPlaybackState, Auth.Streaming |],
-                        `Token
-                    )
-                    |> Location.setHref;
-
-                    send(SetRedirecting);
-                }
+                setRedirecting(_ => true);
             }
-    };
+        };
+        None;
+    });
+
+    switch (redirecting, token) {
+        | (false, None) => <div>(s2e("loading..."))</div>
+        | (true, _) => <div>(s2e("redirecting..."))</div>
+        | (false, Some(token)) => <TestTool token />
+    }
 };

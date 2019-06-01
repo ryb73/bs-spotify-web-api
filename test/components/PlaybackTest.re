@@ -1,6 +1,6 @@
+open React;
 open Belt.Result;
 open ReactLib;
-open ReasonReact;
 open Spotify;
 
 type playerState = {
@@ -29,46 +29,47 @@ type action =
     | ClearPlayer
     | SetPlayer(Playback.player, string, string);
 
-let deviceIdChanged = (e, { send }) =>
-    send(SetDeviceId(ReactEvent.Form.currentTarget(e)##value));
-
-let contextUriChanged = (e, { send }) =>
-    send(SetContextUri(ReactEvent.Form.currentTarget(e)##value));
-
-let urisChanged = (e, { send }) =>
-    send(SetUris(ReactEvent.Form.currentTarget(e)##value));
-
-let positionMsChanged = (e, { send }) =>
-    send(SetPositionMs(ReactEvent.Form.currentTarget(e)##value));
-
-let playerNameChanged = (e, { send }) =>
-    send(SetPlayerName(ReactEvent.Form.currentTarget(e)##value));
-
-let disconnectPlayer = (_, { state: { player }}) => {
-    let player = getOption(player).player;
-    Playback.disconnect(player);
-};
-
 let displayError = fun
     | Ok({ Playback.message }) => message
     | Error(e) => "couldn't decode error " ++ getOption(Js.Json.stringifyAny(e));
 
-let renderActivePlayer = ({ state: { player }, handle }) =>
-    switch player {
-        | Some({ name, deviceId }) =>
-            <div>
-                <div>(s2e("Active player: " ++ name))</div>
-                <div>(s2e("Device ID: " ++ deviceId))</div>
-                <div>
-                    <button onClick=handle(disconnectPlayer)>(s2e("Disconnect"))</button>
-                </div>
-            </div>
-        | None => ReasonReact.null
+let initialState = {
+    initialized: false, deviceId: "", contextUri: "",
+    uris: "spotify:track:3PK7tZzJxuoJYoik7j3p1H", positionMs: "",
+    playerName: "", player: None
+};
+
+let reducer = (state, action) =>
+    switch action {
+        | SetInitialized => { ...state, initialized: true }
+        | SetDeviceId(deviceId) => { ...state, deviceId }
+        | SetContextUri(contextUri) => { ...state, contextUri }
+        | SetUris(uris) => { ...state, uris }
+        | SetPositionMs(positionMs) => { ...state, positionMs }
+        | SetPlayerName(playerName) => { ...state, playerName }
+        | ClearPlayer => { ...state, player: None }
+        | SetPlayer(p, n, d) => {
+            ...state, player: Some({
+                player: p,
+                name: n,
+                deviceId: d
+            })
+        }
     };
 
-let component = reducerComponent("PlaybackTest");
-let make = (~token, _) => {
-    let doMakePlayer = (_, { state: { playerName }, send }) => {
+[@react.component]
+let make = (~token) => {
+    let (state, send) = useReducer(reducer, initialState);
+    let { deviceId, contextUri, uris, positionMs, playerName, player, initialized }
+        = state;
+
+    useEffect0(() => {
+        Playback.ensureInitialized()
+        |> PromEx.map((_) => send(SetInitialized));
+        None;
+    });
+
+    let doMakePlayer = (_) => {
         open Playback;
 
         let player = makePlayer(token, playerName);
@@ -90,7 +91,7 @@ let make = (~token, _) => {
         |> connect;
     };
 
-    let doPlay = (_, { state: { deviceId, contextUri, uris, positionMs }}) => {
+    let doPlay = (_) => {
         let deviceId = deviceId == "" ? None : Some(deviceId);
         let positionMs = positionMs == "" ? None : Some(int_of_string(positionMs));
 
@@ -105,71 +106,65 @@ let make = (~token, _) => {
         ();
     };
 
-    {
-        ...component,
+    let deviceIdChanged = (e) =>
+        send(SetDeviceId(ReactEvent.Form.currentTarget(e)##value));
 
-        didMount: ({ send }) =>
-            Playback.ensureInitialized()
-            |> PromEx.map((_) => send(SetInitialized))
-            |> ignore,
+    let contextUriChanged = (e) =>
+        send(SetContextUri(ReactEvent.Form.currentTarget(e)##value));
 
-        render: self => {
-            let { handle,
-                  state: { initialized, deviceId, contextUri, uris, positionMs,
-                           playerName } } = self;
+    let urisChanged = (e) =>
+        send(SetUris(ReactEvent.Form.currentTarget(e)##value));
 
-            initialized ?
-                <form className="col card" onSubmit=noopSubmit>
-                    <h2>(s2e("Playback"))</h2>
+    let positionMsChanged = (e) =>
+        send(SetPositionMs(ReactEvent.Form.currentTarget(e)##value));
 
+    let playerNameChanged = (e) =>
+        send(SetPlayerName(ReactEvent.Form.currentTarget(e)##value));
+
+    let disconnectPlayer = (_) => {
+        let player = getOption(player).player;
+        Playback.disconnect(player);
+    };
+
+    let activePlayer =
+        switch player {
+            | Some({ name, deviceId }) =>
+                <div>
+                    <div>(s2e("Active player: " ++ name))</div>
+                    <div>(s2e("Device ID: " ++ deviceId))</div>
                     <div>
-                        <button onClick=handle(doMakePlayer)>(s2e("MakePlayer"))</button>
-
-                        <input type_="text" value=playerName style=(width("125px"))
-                            placeholder="player name" onChange=(handle(playerNameChanged)) />
+                        <button onClick=disconnectPlayer>(s2e("Disconnect"))</button>
                     </div>
+                </div>
+            | None => ReasonReact.null
+        };
 
-                    <div>
-                        <button onClick=handle(doPlay)>(s2e("Play"))</button>
+    initialized ?
+        <form className="col card" onSubmit=noopSubmit>
+            <h2>(s2e("Playback"))</h2>
 
-                        <input type_="text" value=deviceId placeholder="deviceId"
-                            onChange=(handle(deviceIdChanged)) />
-                        <input type_="text" value=contextUri placeholder="contextUri"
-                            onChange=(handle(contextUriChanged)) />
-                        <input type_="text" value=uris placeholder="uris"
-                            onChange=(handle(urisChanged)) />
-                        <input type_="text" value=positionMs placeholder="positionMs"
-                            onChange=(handle(positionMsChanged)) />
-                    </div>
+            <div>
+                <button onClick=doMakePlayer>(s2e("MakePlayer"))</button>
 
-                    (renderActivePlayer(self))
-                </form>
-            :
-                <div>(s2e("initializing"))</div>
-        },
+                <input type_="text" value=playerName style=(width("125px"))
+                    placeholder="player name" onChange=playerNameChanged />
+            </div>
 
-        initialState: (_) => {
-            initialized: false, deviceId: "", contextUri: "",
-            uris: "spotify:track:3PK7tZzJxuoJYoik7j3p1H", positionMs: "",
-            playerName: "", player: None
-        },
+            <div>
+                <button onClick=doPlay>(s2e("Play"))</button>
 
-        reducer: (action, state) =>
-            switch action {
-                | SetInitialized => Update({ ...state, initialized: true })
-                | SetDeviceId(deviceId) => Update({ ...state, deviceId })
-                | SetContextUri(contextUri) => Update({ ...state, contextUri })
-                | SetUris(uris) => Update({ ...state, uris })
-                | SetPositionMs(positionMs) => Update({ ...state, positionMs })
-                | SetPlayerName(playerName) => Update({ ...state, playerName })
-                | ClearPlayer => Update({ ...state, player: None })
-                | SetPlayer(p, n, d) => Update({
-                    ...state, player: Some({
-                        player: p,
-                        name: n,
-                        deviceId: d
-                    })
-                })
-            },
-    }
+                <input type_="text" value=deviceId placeholder="deviceId"
+                    onChange=deviceIdChanged />
+                <input type_="text" value=contextUri placeholder="contextUri"
+                    onChange=contextUriChanged />
+                <input type_="text" value=uris placeholder="uris"
+                    onChange=urisChanged />
+                <input type_="text" value=positionMs placeholder="positionMs"
+                    onChange=positionMsChanged />
+            </div>
+
+            (activePlayer)
+        </form>
+    :
+        <div>(s2e("initializing"))</div>;
 };
