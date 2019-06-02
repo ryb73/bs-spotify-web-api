@@ -34,24 +34,17 @@ let createAuthorizeUrl =
 
 /** (clientId, secret, code, redirectUri) => tokens */
 let getTokensFromCode = (clientId, secret, code,  redirectUri) => {
-    let reqData = [|
-        ("client_id", clientId),
-        ("client_secret", secret),
-        ("grant_type", "authorization_code"),
-        ("code", code),
-        ("redirect_uri", redirectUri)
-    |]
-    |> Js.Dict.fromArray
-    |> Js.Dict.map([@bs] ((s) => Js.Json.string(s)))
-    |> Js.Json.object_;
-
     post("https://accounts.spotify.com/api/token")
-    |> setHeader(ContentType(ApplicationXWwwFormUrlencoded))
-    |> send(reqData)
+    |> type_(`form)
+    |> sendKV("client_id", clientId |> Js.Json.string)
+    |> sendKV("client_secret", secret |> Js.Json.string)
+    |> sendKV("grant_type", "authorization_code" |> Js.Json.string)
+    |> sendKV("code", code |> Js.Json.string)
+    |> sendKV("redirect_uri", Js.Global.encodeURI(redirectUri) |> Js.Json.string)
     |> end_
     |> map(({ body }) => body
         |> Belt.Option.getExn
         |> tokens_decode
     )
-    |> unwrapResult;
+    |> map(Belt.Result.getExn)
 };
