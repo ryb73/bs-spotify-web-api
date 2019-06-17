@@ -8,7 +8,7 @@ type tokens = {
     expires_in: int
 };
 
-// (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => url
+/** (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => url */
 let createAuthorizeUrl =
     (~state=?, ~forceShowDialog=?, clientId, redirectUri, scope, responseType) => {
         let queryParams = Js.Dict.fromList([
@@ -48,3 +48,18 @@ let getTokensFromCode = (clientId, secret, code,  redirectUri) => {
     )
     |> map(Belt.Result.getExn)
 };
+
+/** (clientId, secret, refreshToken) => tokens */
+let refreshAccessToken = (clientId, secret, refreshToken) =>
+    post("https://accounts.spotify.com/api/token")
+    |> type_(`form)
+    |> sendKV("refresh_token", refreshToken |> Js.Json.string)
+    |> sendKV("client_id", clientId |> Js.Json.string)
+    |> sendKV("client_secret", secret |> Js.Json.string)
+    |> sendKV("grant_type", "refresh_token" |> Js.Json.string)
+    |> end_
+    |> map(({ body }) => body
+        |> Belt.Option.getExn
+        |> tokens_decode
+    )
+    |> map(Belt.Result.getExn);

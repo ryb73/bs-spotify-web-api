@@ -152,6 +152,7 @@ module Auth: {
           [< `Code | `Token ])
         => string;
     let getTokensFromCode: (string, string, string, string) => Js.Promise.t(tokens);
+    let refreshAccessToken: (string, string, string) => Js.Promise.t(tokens);
 };
 
 module Playlists: {
