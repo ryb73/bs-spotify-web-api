@@ -9,7 +9,7 @@ let _getPlaylists = (~limit=?, ~offset=?, accessToken, path) =>
     |> Api.setOptionalQueryParam("offset", offset |> Belt.Option.map(_, string_of_int))
     |> Api.sendReq(Api.page_decode(Types.Playlist.t_decode));
 
-let playlistsMax = 100;
+let playlistsMax = 50;
 let getPlaylists = (~limit=?, ~offset=?, accessToken, userId) => {
     "/users/" ++ Js.Global.encodeURIComponent(userId) ++ "/playlists"
     |> _getPlaylists(~limit?, ~offset?, accessToken);
