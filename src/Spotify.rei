@@ -105,20 +105,32 @@ module Types: {
     module SimplifiedArtist: {
         [@decco] type t = { id: string, name: string, uri: string, };
     };
+    module SimplifiedAlbum: {
+        [@decco]
+        type t = {
+            artists: array(SimplifiedArtist.t),
+            available_markets: array(string),
+            id: string,
+            name: string,
+            release_date: string,
+            uri: string,
+        };
+    };
     module Track: {
         [@decco] type t = {
-          artists: array(SimplifiedArtist.t),
-          available_markets: array(string),
-          disc_number: int,
-          duration_ms: int,
-          explicit: bool,
-          id: string,
-          is_playable: option(bool),
-          name: string,
-          popularity: int,
-          preview_url: option(string),
-          track_number: int,
-          uri: string,
+            album: SimplifiedAlbum.t,
+            artists: array(SimplifiedArtist.t),
+            available_markets: array(string),
+            disc_number: int,
+            duration_ms: int,
+            explicit: bool,
+            id: string,
+            is_playable: option(bool),
+            name: string,
+            popularity: int,
+            preview_url: option(string),
+            track_number: int,
+            uri: string,
         };
     };
     module PlaylistTrack: {

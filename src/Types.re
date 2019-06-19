@@ -26,9 +26,22 @@ module SimplifiedArtist = {
     };
 };
 
+module SimplifiedAlbum = {
+    [@decco]
+    type t = {
+        artists: array(SimplifiedArtist.t),
+        available_markets: array(string),
+        id: string,
+        name: string,
+        release_date: string,
+        uri: string,
+    };
+};
+
 module Track = {
     [@decco]
     type t = {
+        album: SimplifiedAlbum.t,
         artists: array(SimplifiedArtist.t),
         available_markets: array(string),
         disc_number: int,
