@@ -39,7 +39,7 @@ let make = (~token) => {
             | UserId(id) =>
                 Users.getPlaylists(~limit=gpLimit, ~offset=gpOffset, token, id)
         }
-        |> map(Js.log);
+        |> map(({ Api.next, items }) => Js.log2(next, items));
         ();
     };
 

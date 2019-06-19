@@ -155,6 +155,27 @@ module Auth: {
     let refreshAccessToken: (string, string, string) => Js.Promise.t(tokens);
 };
 
+module Api: {
+    [@decco]
+    type page('a) = {
+        href: string,
+        items: array('a),
+        limit: int,
+        next: option(string),
+        offset: int,
+        previous: option(string),
+        total: int,
+    };
+    let buildGet: (token(_), string) => Superagent.request(Superagent.get);
+    let buildPut: (token(_), string) => Superagent.request(Superagent.put);
+    let setOptionalQueryParam:
+        (Js.Dict.key, option(string), Superagent.request('a))
+        => Superagent.request('a);
+    let setOptionalParam:
+        (Js.Dict.key, option(Js.Json.t), Superagent.request(Superagent.acceptsBody))
+        => Superagent.request(Superagent.acceptsBody);
+};
+
 module Playlists: {
     let tracksMax: int;
     let getTracks:
@@ -173,15 +194,4 @@ module Users: {
     let getMyPlaylists:
         (~limit: int=?, ~offset: int=?, token(_)) =>
         Js.Promise.t(Api.page(Playlist.t));
-};
-
-module Api: {
-    let buildGet: (token(_), string) => Superagent.request(Superagent.get);
-    let buildPut: (token(_), string) => Superagent.request(Superagent.put);
-    let setOptionalQueryParam:
-        (Js.Dict.key, option(string), Superagent.request('a))
-        => Superagent.request('a);
-    let setOptionalParam:
-        (Js.Dict.key, option(Js.Json.t), Superagent.request(Superagent.acceptsBody))
-        => Superagent.request(Superagent.acceptsBody);
 };
