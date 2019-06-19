@@ -47,6 +47,7 @@ module Track = {
 module PlaylistTrack = {
     [@decco]
     type t = {
+        added_at: string,
         is_local: bool,
         track: Track.t,
     };

@@ -122,7 +122,12 @@ module Types: {
         };
     };
     module PlaylistTrack: {
-        [@decco] type t = { is_local: bool, track: Track.t, };
+        [@decco]
+        type t = {
+            added_at: string,
+            is_local: bool,
+            track: Track.t,
+        };
     };
     module Playlist: {
         [@decco] type t = {
