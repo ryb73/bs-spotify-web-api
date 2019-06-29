@@ -1,5 +1,5 @@
 exception NoBody(Superagent.result);
-exception UnrecognizedResponseFormat(Decco.decodeError);
+exception UnrecognizedResponseFormat(Decco.decodeError, Js.Json.t);
 
 module User = {
     [@decco] type id = string;

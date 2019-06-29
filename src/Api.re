@@ -26,7 +26,7 @@ let buildPut = (accessToken, path) =>
 let decodeResponse = (decoder, body) =>
     switch (decoder(body)) {
         | Ok(decoded) => decoded
-        | Error(err) => raise(UnrecognizedResponseFormat(err))
+        | Error(err) => raise(UnrecognizedResponseFormat(err, body))
     };
 
 let sendReq = (decoder, request) =>
