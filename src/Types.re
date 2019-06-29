@@ -20,9 +20,9 @@ module User = {
 module SimplifiedArtist = {
     [@decco]
     type t = {
-        id: string,
+        id: option(string),
         name: string,
-        uri: string,
+        uri: option(string),
     };
 };
 
@@ -31,10 +31,10 @@ module SimplifiedAlbum = {
     type t = {
         artists: array(SimplifiedArtist.t),
         available_markets: array(string),
-        id: string,
+        id: option(string),
         name: string,
-        release_date: string,
-        uri: string,
+        release_date: option(string),
+        uri: option(string),
     };
 };
 
@@ -47,7 +47,7 @@ module Track = {
         disc_number: int,
         duration_ms: int,
         explicit: bool,
-        id: string,
+        id: option(string),
         is_playable: option(bool),
         name: string,
         popularity: int,

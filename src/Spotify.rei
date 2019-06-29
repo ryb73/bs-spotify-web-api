@@ -103,17 +103,22 @@ module Types: {
         };
     };
     module SimplifiedArtist: {
-        [@decco] type t = { id: string, name: string, uri: string, };
+        [@decco]
+        type t = {
+            id: option(string),
+            name: string,
+            uri: option(string),
+        };
     };
     module SimplifiedAlbum: {
         [@decco]
         type t = {
             artists: array(SimplifiedArtist.t),
             available_markets: array(string),
-            id: string,
+            id: option(string),
             name: string,
-            release_date: string,
-            uri: string,
+            release_date: option(string),
+            uri: option(string),
         };
     };
     module Track: {
@@ -124,7 +129,7 @@ module Types: {
             disc_number: int,
             duration_ms: int,
             explicit: bool,
-            id: string,
+            id: option(string),
             is_playable: option(bool),
             name: string,
             popularity: int,
