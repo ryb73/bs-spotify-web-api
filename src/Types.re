@@ -76,6 +76,6 @@ module Playlist = {
         public: bool,
         snapshot_id: string,
         uri: string,
-        owner: User.t
+        owner: User.t,
     };
 };
