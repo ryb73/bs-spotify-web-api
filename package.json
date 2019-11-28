@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "4.0.0-typed-scope.22",
+  "version": "4.0.0-typed-scope.23",
   "description": "Bucklescript bindings for spotify-web-api",
   "main": "index.js",
   "scripts": {
