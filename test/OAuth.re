@@ -1,4 +1,3 @@
-open Belt.Result;
 open ReDom;
 
 [@decco] type hash = {
@@ -11,7 +10,7 @@ let getAccessTokenFromHash = () => {
         |> Qs.parse
         |> hash_decode;
     switch parsedHash {
-        | Ok({ access_token }) => access_token
+        | Belt.Result.Ok({ access_token }) => access_token
         | Error(_) => None
     };
 };

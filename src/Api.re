@@ -1,5 +1,4 @@
 open Js.Promise;
-open Belt.Result;
 open Types;
 open Superagent;
 
@@ -25,7 +24,7 @@ let buildPut = (accessToken, path) =>
 
 let decodeResponse = (decoder, body) =>
     switch (decoder(body)) {
-        | Ok(decoded) => decoded
+        | Belt.Result.Ok(decoded) => decoded
         | Error(err) => raise(UnrecognizedResponseFormat(err, body))
     };
 

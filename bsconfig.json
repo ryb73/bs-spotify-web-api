@@ -3,8 +3,8 @@
     "bs-dependencies": [
         "@ryb73/bs-qs",
         "@ryb73/bs-superagent",
-        "@ryb73/decco",
         "@ryb73/prom-ex",
+        "decco",
     ],
     "bs-dev-dependencies": [
         "@glennsl/bs-jest",
@@ -26,7 +26,7 @@
         }
     ],
     "ppx-flags": [
-        "@ryb73/decco/ppx/ppx_decco.sh"
+        "decco/ppx"
     ],
     "reason": { "react-jsx": 3 },
     "refmt": 3,
