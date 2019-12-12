@@ -12,7 +12,6 @@ module Access: {
     type userTopRead = o;
     type userReadPrivate = o;
     type userReadEmail = o;
-    type userReadBirthdate = o;
     type userReadPlaybackState = o;
     type userReadCurrentlyPlaying = o;
     type streaming = o;
@@ -21,70 +20,67 @@ module Access: {
     type userFollowModify = o;
     type userFollowRead = o;
 
-    type scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_);
-    let scope: scope(x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x);
-    let all: scope(o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o);
+    type scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_);
+    let scope: scope(x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x);
+    let all: scope(o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o);
 
     let withUserLibraryRead:
-        scope(_,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope(o,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope(_,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope(o,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withUserLibraryModify:
-        scope('s1,_,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,o,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,_,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,o,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withPlaylistReadPrivate:
-        scope('s1,'s2,_,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,o,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,_,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,o,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withPlaylistModifyPublic:
-        scope('s1,'s2,'s3,_,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,o,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,_,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,o,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withPlaylistModifyPrivate:
-        scope('s1,'s2,'s3,'s4,_,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,o,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,_,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,o,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withPlaylistReadCollaborative:
-        scope('s1,'s2,'s3,'s4,'s4,_,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s4,o,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s4,_,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s4,o,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withUserReadRecentlyPlayed:
-        scope('s1,'s2,'s3,'s4,'s4,'s5,_,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s4,'s5,o,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s4,'s5,_,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s4,'s5,o,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withUserTopRead:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,_,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,o,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,_,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,o,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withUserReadPrivate:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,_,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,o,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,_,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,o,'s10,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withUserReadEmail:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,_,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,o,'s11,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
-    let withUserReadBirthdate:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,_,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,o,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,_,'s12,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,o,'s12,'s13,'s14,'s15,'s16,'s17,'s18);
     let withUserReadPlaybackState:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,_,'s13,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,o,'s13,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,_,'s13,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,o,'s13,'s14,'s15,'s16,'s17,'s18);
     let withUserReadCurrentlyPlaying:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,_,'s14,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,o,'s14,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,_,'s14,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,o,'s14,'s15,'s16,'s17,'s18);
     let withStreaming:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,_,'s15,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,o,'s15,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,_,'s15,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,o,'s15,'s16,'s17,'s18);
     let withAppRemoteControl:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,_,'s16,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,o,'s16,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,_,'s16,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,o,'s16,'s17,'s18);
     let withUserModifyPlaybackState:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,_,'s17,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,o,'s17,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,_,'s17,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,o,'s17,'s18);
     let withUserFollowModify:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,_,'s18) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,o,'s18);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,_,'s18) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,o,'s18);
     let withUserFollowRead:
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,_) =>
-        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s11,'s12,'s13,'s14,'s15,'s16,'s17,o);
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,_) =>
+        scope('s1,'s2,'s3,'s4,'s5,'s6,'s7,'s8,'s9,'s10,'s12,'s13,'s14,'s15,'s16,'s17,o);
 
     type token('a);
     let token:
-        (~limitScope: scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h,'j)=?,
+        (~limitScope: scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h)=?,
           string)
-          => token(scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h,'j));
+          => token(scope('q,'w,'e,'r,'e,'t,'y,'u,'i,'o,'p,'a,'s,'d,'f,'g,'h));
 };
 open Access;
 
@@ -170,7 +166,7 @@ module Auth: {
     };
     let createAuthorizeUrl:
         (~state: string=?, ~forceShowDialog: bool=?, string, string,
-          Access.scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_),
+          Access.scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_),
           [< `Code | `Token ])
         => string;
     let getTokensFromCode: (string, string, string, string) => Js.Promise.t(tokens);
@@ -208,7 +204,7 @@ module Playlists: {
 
 module Users: {
     // TODO: link scope typing to type of user result?
-    let me: token(scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)) => Js.Promise.t(User.t);
+    let me: token(scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)) => Js.Promise.t(User.t);
     let playlistsMax: int;
     let getPlaylists:
         (~limit: int=?, ~offset: int=?, token(_), string) =>

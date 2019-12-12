@@ -10,7 +10,6 @@ type userReadRecentlyPlayed = o;
 type userTopRead = o;
 type userReadPrivate = o;
 type userReadEmail = o;
-type userReadBirthdate = o;
 type userReadPlaybackState = o;
 type userReadCurrentlyPlaying = o;
 type streaming = o;
@@ -19,7 +18,7 @@ type userModifyPlaybackState = o;
 type userFollowModify = o;
 type userFollowRead = o;
 
-type scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_) = Js.Array.t(string);
+type scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_) = Js.Array.t(string);
 
 let scope = [||];
 
@@ -33,7 +32,6 @@ let withUserReadRecentlyPlayed = Js.Array.concat([|"user-read-recently-played"|]
 let withUserTopRead = Js.Array.concat([|"user-top-read"|]);
 let withUserReadPrivate = Js.Array.concat([|"user-read-private"|]);
 let withUserReadEmail = Js.Array.concat([|"user-read-email"|]);
-let withUserReadBirthdate = Js.Array.concat([|"user-read-birthdate"|]);
 let withUserReadPlaybackState = Js.Array.concat([|"user-read-playback-state"|]);
 let withUserReadCurrentlyPlaying = Js.Array.concat([|"user-read-currently-playing"|]);
 let withStreaming = Js.Array.concat([|"streaming"|]);
@@ -46,12 +44,12 @@ let all = scope
     |> withUserLibraryRead |> withUserLibraryModify |> withPlaylistReadPrivate
     |> withPlaylistModifyPublic |> withPlaylistModifyPrivate
     |> withPlaylistReadCollaborative |> withUserReadRecentlyPlayed |> withUserTopRead
-    |> withUserReadPrivate |> withUserReadEmail |> withUserReadBirthdate
+    |> withUserReadPrivate |> withUserReadEmail
     |> withUserReadPlaybackState |> withUserReadCurrentlyPlaying |> withStreaming
     |> withAppRemoteControl |> withUserModifyPlaybackState |> withUserFollowModify
     |> withUserFollowRead;
 
-let scopeToString = (scope: scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)) =>
+let scopeToString = (scope: scope(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)) =>
     Js.Array.joinWith(",", scope);
 
 type token('scope) = string;
