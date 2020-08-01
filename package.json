@@ -27,20 +27,22 @@
     "url": "git@github.com:ryb73/bs-spotify-web-api.git"
   },
   "peerDependencies": {
-    "bs-platform": "^6.0.1"
+    "bs-platform": "8"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.9",
-    "bs-platform": "^6.0.1",
-    "reason-react": "^0.7.0",
+    "@glennsl/bs-jest": "^0.5.1",
+    "bs-platform": "^8.0.3",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "reason-react": "^0.9.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "@ryb73/bs-qs": "^4.0.0-bs6.0",
-    "@ryb73/bs-superagent": "^0.4.0-bs6.0",
+    "@ryb73/bs-qs": "^4.0.0",
+    "@ryb73/bs-superagent": "^0.4.0",
     "@ryb73/prom-ex": "^1.0.1",
-    "@ryb73/re-dom": "^0.2.0-bs6.0",
-    "decco": "^1.0.0"
+    "@ryb73/re-dom": "^0.2.1",
+    "decco": "^1.2.1"
   }
 }

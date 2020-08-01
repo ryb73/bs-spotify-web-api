@@ -7,7 +7,7 @@ open Spotify;
 [@bs.module] external config : Js.Json.t = "../../../../config.json";
 let clientId = switch (config_decode(config)) {
     | Ok({ clientId }) => clientId
-    | _ => failwith("Invalid config")
+    | Error(_) => failwith("Invalid config")
 };
 
 let scope = Access.(scope

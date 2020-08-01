@@ -30,5 +30,8 @@
     ],
     "reason": { "react-jsx": 3 },
     "refmt": 3,
-    "bsc-flags": [ "-w -10", "-bs-super-errors" ]
+    "warnings": {
+        "number": "+A-9-41-48"
+    },
+    "bsc-flags": [ "-bs-super-errors" ]
 }

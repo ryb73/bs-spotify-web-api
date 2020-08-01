@@ -39,8 +39,8 @@ let make = (~token) => {
             | UserId(id) =>
                 Users.getPlaylists(~limit=gpLimit, ~offset=gpOffset, token, id)
         }
-        |> map(({ Api.next, items }) => Js.log2(next, items));
-        ();
+        |> map(({ Api.next, items }) => Js.log2(next, items))
+        |> ignore
     };
 
     let meClicked = (_) => setUser(_ => Me);

@@ -23,11 +23,13 @@ let createAuthorizeUrl =
 
         state
         -> Belt.Option.map(Js.Json.string)
-        -> Belt.Option.map(Js.Dict.set(queryParams, "state"));
+        -> Belt.Option.map(Js.Dict.set(queryParams, "state"))
+        -> ignore;
 
         forceShowDialog
         -> Belt.Option.map(Js.Json.boolean)
-        -> Belt.Option.map(Js.Dict.set(queryParams, "show_dialog"));
+        -> Belt.Option.map(Js.Dict.set(queryParams, "show_dialog"))
+        -> ignore;
 
         "https://accounts.spotify.com/authorize?" ++ Qs.stringify(queryParams);
 };

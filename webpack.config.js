@@ -9,7 +9,7 @@ module.exports = {
     mode: "development",
 
     entry: {
-        index: rel("lib/js/test/index.js"),
+        TestPage: rel("lib/js/test/TestPage.js"),
     },
 
     output: {
